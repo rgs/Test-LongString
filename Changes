@@ -3,3 +3,7 @@
 
 0.09
     Add an is_string_nows() function (RT #14018)
+
+0.10
+    Better implementation of _common_prefix_length
+    by Tassilo von Parseval

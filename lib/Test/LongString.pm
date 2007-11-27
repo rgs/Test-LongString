@@ -3,7 +3,7 @@ package Test::LongString;
 use strict;
 use vars qw($VERSION @ISA @EXPORT $Max $Context);
 
-$VERSION = 0.09;
+$VERSION = '0.10';
 
 use Test::Builder;
 my $Tester = new Test::Builder();
@@ -52,23 +52,11 @@ sub _display {
     return $s;
 }
 
-# I'm not too happy with this function. And you ?
 sub _common_prefix_length {
-    my ($x, $y) = (shift, shift);
-    my $r = 0;
-    while (length($x) && length($y)) {
-	my ($x1,$x2) = $x =~ /(.)(.*)/s;
-	my ($y1,$y2) = $y =~ /(.)(.*)/s;
-	if ($x1 eq $y1) {
-	    $x = $x2;
-	    $y = $y2;
-	    ++$r;
-	}
-	else {
-	    last;
-	}
-    }
-    $r;
+    my ($str1, $str2) = @_;
+    my $diff = $str1 ^ $str2;
+    my ($pre) = $diff =~ /^(\000*)/;
+    return length $pre;
 }
 
 sub contains_string($$;$) {
@@ -83,7 +71,7 @@ sub contains_string($$;$) {
         $Tester->diag("String to look for is undef");
     } else {
         my $index = index($str, $sub);
-        $ok = ($index >= 0);
+        $ok = ($index >= 0) ? 1 : 0;
         $Tester->ok($ok, $name);
         if (!$ok) {
             my ($g, $e) = (_display($str), _display($sub));
@@ -108,7 +96,7 @@ sub lacks_string($$;$) {
         $Tester->diag("String to look for is undef");
     } else {
         my $index = index($str, $sub);
-        $ok = ($index < 0);
+        $ok = ($index < 0) ? 1 : 0;
         $Tester->ok($ok, $name);
         if (!$ok) {
             my ($g, $e) = (_display($str), _display($sub));
