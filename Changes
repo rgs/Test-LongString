@@ -1,0 +1,5 @@
+0.08
+    Fix and improve diagostics
+
+0.09
+    Add an is_string_nows() function (RT #14018)
