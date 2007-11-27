@@ -7,3 +7,7 @@
 0.10
     Better implementation of _common_prefix_length
     by Tassilo von Parseval
+
+0.11
+    Require a more recent Test::Builder::Tester,
+    since tests fail with 1.03.
