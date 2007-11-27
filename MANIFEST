@@ -1,6 +1,7 @@
 lib/Test/LongString.pm
 Makefile.PL
 MANIFEST
+MANIFEST.SKIP
 README
 t/01teststring.t
 t/02import.t
