@@ -8,4 +8,5 @@ WriteMakefile(
 	'Test::Builder'		=> 0.12,
 	'Test::Builder::Tester'	=> 1.04,
     },
+    LICENSE	    => 'perl',
 );
