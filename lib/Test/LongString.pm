@@ -75,14 +75,67 @@ sub contains_string($$;$) {
         $Tester->ok($ok, $name);
         if (!$ok) {
             my ($g, $e) = (_display($str), _display($sub));
+
+            # if _lcss() returned the actual substring,
+            # all we'd have to do is:
+            # my $l = _display( _lcss($str, $sub) );
+
+            my ($off, $len) = _lcss($str, $sub);
+            my $l = _display( substr($str, $off, $len) );
+
             $Tester->diag(<<DIAG);
     searched: $g
   can't find: $e
+        LCSS: $l
 DIAG
+
+            # if there's room left, show some surrounding context
+            if ($len < $Max) {
+                my $available = int( ($Max - $len) / 2 );
+                my $begin = ($off - ($available*2) > 0) ? $off - ($available*2) 
+                          : ($off - $available > 0) ? $off - $available : 0;
+                my $c = _display( substr($str, $begin, $Max) );
+
+                $Tester->diag("LCSS context: $c");
+            }
         }
     }
     return $ok;
 }
+
+sub _lcss($$) {
+    my ($S, $T) = (@_);
+    my @L;
+    my ($offset, $length) = (0,0);
+
+    # prevent us from having to zero a $ix$j matrix
+    no warnings 'uninitialized';
+
+    # now the actual LCSS algorithm
+    foreach my $i (0 .. length($S) ) {
+        foreach my $j (0 .. length($T)) {
+            if (substr($S, $i, 1) eq substr($T, $j, 1)) {
+                if ($i == 0 or $j == 0) {
+                    $L[$i][$j] = 1;
+                }
+                else {
+                    $L[$i][$j] = $L[$i-1][$j-1] + 1;
+                }
+                if ($L[$i][$j] > $length) {
+                    $length = $L[$i][$j];
+                    $offset = $i - $length + 1;
+                }
+            }
+        }
+    }
+
+    # if you want to display just the lcss:
+    # return substr($S, $offset, $length);
+
+    # but to display the surroundings, we need to:
+    return ($offset, $length);
+}
+
 
 sub lacks_string($$;$) {
     my ($str,$sub,$name) = @_;
