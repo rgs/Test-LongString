@@ -373,6 +373,19 @@ expression search.
     #         searched: "To be, or not to be: that is the question:\x{0a}Whether"...
     #   and can't find: "Romeo"
 
+As of version 0.12, C<contains_string()> will also report the Longest Common
+SubString (LCSS) found in I<$string> and, if the LCSS is short enough, the
+surroundings will also be shown under I<LCSS Context>. This should help debug
+tests for really long strings like HTML output, so you'll get something like:
+
+   contains_string( $html, '<div id="MainContent">' );
+   #   Failed test at t/foo.t line 10.
+   #     searched: "<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Stric"...
+   #   can't find: "<div id="MainContent">"
+   #         LCSS: "ainContent""
+   # LCSS context: "dolor sit amet</span>\x{0a}<div id="mainContent" class="
+
+
 =head2 lacks_string( $string, $substring [, $label ] )
 
 C<lacks_string()> makes sure that I<$substring> does NOT exist in
