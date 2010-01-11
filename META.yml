@@ -1,12 +1,15 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         Test-LongString
-version:      0.11
-version_from: lib/Test/LongString.pm
-installdirs:  site
-requires:
+--- #YAML:1.0
+name:                Test-LongString
+version:             0.12
+abstract:            ~
+license:             perl
+author:              
+    - Rafael Garcia-Suarez <rgs@consttype.org>
+generated_by:        ExtUtils::MakeMaker version 6.42
+distribution_type:   module
+requires:     
     Test::Builder:                 0.12
     Test::Builder::Tester:         1.04
-
-distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.30_01
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3

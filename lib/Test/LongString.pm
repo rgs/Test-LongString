@@ -3,7 +3,7 @@ package Test::LongString;
 use strict;
 use vars qw($VERSION @ISA @EXPORT $Max $Context);
 
-$VERSION = '0.11';
+$VERSION = '0.12';
 
 use Test::Builder;
 my $Tester = new Test::Builder();
@@ -410,6 +410,10 @@ the inspirational L<Acme::Test::Buffy>. Thanks to Andy Lester for lots of patche
 
 This program is free software; you may redistribute it and/or modify it under
 the same terms as Perl itself.
+
+A git repository for this module is available at
+
+    http://consttype.org/git/Test-LongString.git
 
 =head1 SEE ALSO
 

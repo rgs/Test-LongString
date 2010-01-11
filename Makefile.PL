@@ -1,7 +1,7 @@
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    AUTHOR	    => 'Rafael Garcia-Suarez <rgarciasuarez@gmail.com>',
+    AUTHOR	    => 'Rafael Garcia-Suarez <rgs@consttype.org>',
     NAME	    => "Test::LongString",
     VERSION_FROM    => "lib/Test/LongString.pm",
     PREREQ_PM	    => {

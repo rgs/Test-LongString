@@ -11,3 +11,7 @@
 0.11
     Require a more recent Test::Builder::Tester,
     since tests fail with 1.03.
+
+0.12
+    Show longest common substring in diagnostics
+    (Breno G. de Oliveira)
