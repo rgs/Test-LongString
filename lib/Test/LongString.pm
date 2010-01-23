@@ -1,7 +1,7 @@
 package Test::LongString;
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT $Max $Context);
+use vars qw($VERSION @ISA @EXPORT $Max $Context $LCSS);
 
 $VERSION = '0.12';
 
@@ -19,9 +19,13 @@ $Max = 50;
 # Amount of context provided when starting displaying a string in the middle
 $Context = 10;
 
+# Boolean: should we show LCSS context ?
+$LCSS = 1;
+
 sub import {
     (undef, my %args) = @_;
     $Max = $args{max} if defined $args{max};
+    $LCSS = $args{lcss} if defined $args{lcss};
     @_ = $_[0];
     goto &Exporter::import;
 }
@@ -76,27 +80,31 @@ sub contains_string($$;$) {
         if (!$ok) {
             my ($g, $e) = (_display($str), _display($sub));
 
-            # if _lcss() returned the actual substring,
-            # all we'd have to do is:
-            # my $l = _display( _lcss($str, $sub) );
-
-            my ($off, $len) = _lcss($str, $sub);
-            my $l = _display( substr($str, $off, $len) );
-
             $Tester->diag(<<DIAG);
     searched: $g
   can't find: $e
-        LCSS: $l
 DIAG
 
-            # if there's room left, show some surrounding context
-            if ($len < $Max) {
-                my $available = int( ($Max - $len) / 2 );
-                my $begin = ($off - ($available*2) > 0) ? $off - ($available*2) 
-                          : ($off - $available > 0) ? $off - $available : 0;
-                my $c = _display( substr($str, $begin, $Max) );
+            if ($LCSS) {
+                # if _lcss() returned the actual substring,
+                # all we'd have to do is:
+                # my $l = _display( _lcss($str, $sub) );
 
-                $Tester->diag("LCSS context: $c");
+                my ($off, $len) = _lcss($str, $sub);
+                my $l = _display( substr($str, $off, $len) );
+
+                $Tester->diag(<<DIAG);
+        LCSS: $l
+DIAG
+                # if there's room left, show some surrounding context
+                if ($len < $Max) {
+                    my $available = int( ($Max - $len) / 2 );
+                    my $begin = ($off - ($available*2) > 0) ? $off - ($available*2) 
+                    : ($off - $available > 0) ? $off - $available : 0;
+                    my $c = _display( substr($str, $begin, $Max) );
+
+                    $Tester->diag("LCSS context: $c");
+                }
             }
         }
     }
@@ -385,6 +393,10 @@ tests for really long strings like HTML output, so you'll get something like:
    #         LCSS: "ainContent""
    # LCSS context: "dolor sit amet</span>\x{0a}<div id="mainContent" class="
 
+You can turn off LCSS reporting by setting C<$Test::LongString::LCSS> to 0,
+or by specifying an argument to C<use>:
+
+    use Test::LongString lcss => 0;
 
 =head2 lacks_string( $string, $substring [, $label ] )
 
