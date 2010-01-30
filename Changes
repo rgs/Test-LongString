@@ -15,3 +15,6 @@
 0.12
     Show longest common substring in diagnostics
     (Breno G. de Oliveira)
+
+0.13
+    Allow to display LCSS output in diagnostics
