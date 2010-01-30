@@ -6,10 +6,6 @@ use Test::More tests => 11;
 
 BEGIN { use_ok "Test::LongString" }
 
-#for some reason, doing substr("xyzzx", Test::LongString::_lcss ( "xyzzx", "abcxyzefg" ));
-#directly doesn't show the correct output, so we have to fetch ($off, $len) first. 
-#I'm not sure why this happens...
-
 my ($off, $len) = Test::LongString::_lcss ( "xyzzx", "abcxyzefg" );
 my $longest = substr('xyzzx', $off, $len);
 is ( $longest, "xyz", "xyzzx vs abcxyzefg" );
