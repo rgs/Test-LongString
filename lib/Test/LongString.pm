@@ -438,7 +438,7 @@ the same terms as Perl itself.
 
 A git repository for this module is available at
 
-    http://consttype.org/git/Test-LongString.git
+    git://github.com/rgs/Test-LongString.git
 
 =head1 SEE ALSO
 
