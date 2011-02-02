@@ -34,7 +34,7 @@ ungirdled, was sustained gently behind him by the mild morning air. He
 held the bowl aloft and intoned:
 --Introibo ad altare dei.
 EXAMPLE
-test_test("Not lacking");
+test_test("Mulitple lines not lacking");
 
 # Source string undef
 test_out("not ok 1 - Look inside undef");
