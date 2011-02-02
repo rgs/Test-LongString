@@ -1,7 +1,7 @@
 package Test::LongString;
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT $Max $Context $LCSS);
+use vars qw($VERSION @ISA @EXPORT $Max $Context $EOL $LCSS);
 
 $VERSION = '0.14';
 
@@ -22,10 +22,14 @@ $Context = 10;
 # Boolean: should we show LCSS context ?
 $LCSS = 1;
 
+# Regular expression that decides what a end of line is
+$EOL = "\n";
+
 sub import {
     (undef, my %args) = @_;
     $Max = $args{max} if defined $args{max};
     $LCSS = $args{lcss} if defined $args{lcss};
+    $EOL = $args{eol} if defined $args{eol};
     @_ = $_[0];
     goto &Exporter::import;
 }
@@ -161,10 +165,13 @@ sub lacks_string($$;$) {
         $Tester->ok($ok, $name);
         if (!$ok) {
             my ($g, $e) = (_display($str), _display($sub));
+            my $line = () = substr($str,0,$index-1) =~ /$EOL/g;
+            my $column = $line ? $index - $+[0] + 1: $index + 1;
+            $line++;
             $Tester->diag(<<DIAG);
     searched: $g
    and found: $e
- at position: $index
+ at position: $index (line $line column $column)
 DIAG
         }
     }
@@ -196,12 +203,15 @@ DIAG
 	    _display($got, $common_prefix),
 	    _display($expected, $common_prefix),
 	);
+	my $line = () = substr($expected,0,$common_prefix) =~ /$EOL/g;
+	my $column = $line ? $common_prefix - $+[0] + 1 : $common_prefix + 1;
+	$line++;
 	$Tester->diag(<<DIAG);
          got: $g
       length: ${\(length $got)}
     expected: $e
       length: ${\(length $expected)}
-    strings begin to differ at char ${\($common_prefix + 1)}
+    strings begin to differ at char ${\($common_prefix + 1)} (line $line column $column)
 DIAG
 	return 0;
     }
@@ -333,6 +343,10 @@ It reports the length of the common prefix of the strings.
 
 =item *
 
+It reports the line and column the strings started to differ on.
+
+=item *
+
 In the diagnostics, non-ASCII characters are escaped as C<\x{xx}>.
 
 =back
@@ -346,7 +360,7 @@ For example:
     #       length: 1490
     #     expected: "O Romeo, Romeo,\x{0a}wherefore art thou Romeo?\x{0a}Deny thy"...
     #       length: 154
-    #     strings begin to differ at char 1
+    #     strings begin to differ at char 1 (line 1, column 1)
 
 =head2 is_string_nows( $string, $expected [, $label ] )
 
@@ -409,7 +423,7 @@ regular expression search.
     #     Failed test (soliloquy.t at line 10)
     #         searched: "To be, or not to be: that is the question:\x{0a}Whether"...
     #        and found: "slings"
-    #      at position: 147
+    #      at position: 147 (line 3 column 4)
 
 =head1 CONTROLLING OUTPUT
 
@@ -427,6 +441,16 @@ middle, more precisely at C<$Test::LongString::Context> characters before the
 first difference. By default this value is 10 characters. If you want
 Test::LongString to always print the beginning of compared strings no matter
 where they differ, undefine C<$Test::LongString::Context>.
+
+When computing line numbers this module uses "\n" to count line endings. This
+may not be apporperate for strings on your platform, and can be overriden
+by setting the C<$Test::LongString::EOL> variable to a suitable regular
+expression (either a reference to a regular expression or a string that
+can be interpolated into a regular expression.)
+
+You can als set it by specifiy an argument to C<use>
+
+    use Test::LongString eol => "\x{0a}\x{0c}";
 
 =head1 AUTHOR
 

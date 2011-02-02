@@ -2,7 +2,7 @@
 
 use strict;
 
-use Test::More tests => 4;
+use Test::More tests => 5;
 use Test::Builder::Tester;
 use Test::Builder::Tester::Color;
 use Test::LongString;
@@ -17,8 +17,23 @@ test_out("not ok 1 - Any peanut butter in my chocolate?");
 test_fail(4);
 test_diag(qq(    searched: "Reese's Peanut Butter Cups"));
 test_diag(qq(   and found: "Peanut Butter"));
-test_diag(qq( at position: 8));
+test_diag(qq! at position: 8 (line 1 column 9)!);
 lacks_string("Reese's Peanut Butter Cups", "Peanut Butter", "Any peanut butter in my chocolate?");
+test_test("Not lacking");
+
+# Mulitple lines
+test_out("not ok 1 - Mild?");
+test_fail(4);
+test_diag(qq(    searched: "Stately, plump Buck Mulligan came from the stairhe"...));
+test_diag(qq(   and found: "mild"));
+test_diag(qq! at position: 195 (line 3 column 51)!);
+lacks_string(<<'EXAMPLE',"mild","Mild?");
+Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of
+lather on which a mirror and a razor lay crossed. A yellow dressinggown,
+ungirdled, was sustained gently behind him by the mild morning air. He
+held the bowl aloft and intoned:
+--Introibo ad altare dei.
+EXAMPLE
 test_test("Not lacking");
 
 # Source string undef
