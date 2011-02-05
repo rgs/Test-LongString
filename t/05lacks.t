@@ -21,7 +21,7 @@ test_diag(qq! at position: 8 (line 1 column 9)!);
 lacks_string("Reese's Peanut Butter Cups", "Peanut Butter", "Any peanut butter in my chocolate?");
 test_test("Not lacking");
 
-# Mulitple lines
+# Multiple lines
 test_out("not ok 1 - Mild?");
 test_fail(4);
 test_diag(qq(    searched: "Stately, plump Buck Mulligan came from the stairhe"...));
@@ -34,7 +34,7 @@ ungirdled, was sustained gently behind him by the mild morning air. He
 held the bowl aloft and intoned:
 --Introibo ad altare dei.
 EXAMPLE
-test_test("Mulitple lines not lacking");
+test_test("Multiple lines not lacking");
 
 # Source string undef
 test_out("not ok 1 - Look inside undef");

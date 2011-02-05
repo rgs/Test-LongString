@@ -360,7 +360,7 @@ For example:
     #       length: 1490
     #     expected: "O Romeo, Romeo,\x{0a}wherefore art thou Romeo?\x{0a}Deny thy"...
     #       length: 154
-    #     strings begin to differ at char 1 (line 1, column 1)
+    #     strings begin to differ at char 1 (line 1 column 1)
 
 =head2 is_string_nows( $string, $expected [, $label ] )
 
@@ -443,12 +443,12 @@ Test::LongString to always print the beginning of compared strings no matter
 where they differ, undefine C<$Test::LongString::Context>.
 
 When computing line numbers this module uses "\n" to count line endings. This
-may not be apporperate for strings on your platform, and can be overriden
+may not be appropriate for strings on your platform, and can be overriden
 by setting the C<$Test::LongString::EOL> variable to a suitable regular
 expression (either a reference to a regular expression or a string that
 can be interpolated into a regular expression.)
 
-You can als set it by specifiy an argument to C<use>
+You can also set it by specifying an argument to C<use>:
 
     use Test::LongString eol => "\x{0a}\x{0c}";
 
