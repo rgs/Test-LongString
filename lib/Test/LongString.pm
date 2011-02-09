@@ -443,7 +443,7 @@ Test::LongString to always print the beginning of compared strings no matter
 where they differ, undefine C<$Test::LongString::Context>.
 
 When computing line numbers this module uses "\n" to count line endings. This
-may not be appropriate for strings on your platform, and can be overriden
+may not be appropriate for strings on your platform, and can be overridden
 by setting the C<$Test::LongString::EOL> variable to a suitable regular
 expression (either a reference to a regular expression or a string that
 can be interpolated into a regular expression.)
@@ -463,6 +463,10 @@ the same terms as Perl itself.
 A git repository for this module is available at
 
     git://github.com/rgs/Test-LongString.git
+
+and the project page at
+
+    http://github.com/rgs/Test-LongString
 
 =head1 SEE ALSO
 
