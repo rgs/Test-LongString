@@ -364,7 +364,7 @@ For example:
 
 =head2 is_string_nows( $string, $expected [, $label ] )
 
-Like C<is_string()>, but removes whitepace (in the C<\s> sense) from the
+Like C<is_string()>, but removes whitespace (in the C<\s> sense) from the
 arguments before comparing them.
 
 =head2 like_string( $string, qr/regex/ [, $label ] )
