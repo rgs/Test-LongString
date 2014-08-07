@@ -62,7 +62,7 @@ sub _display {
 
 sub _common_prefix_length {
     my ($str1, $str2) = @_;
-    my $diff = $str1 ^ $str2;
+    my $diff = "$str1" ^ "$str2";
     my ($pre) = $diff =~ /^(\000*)/;
     return length $pre;
 }

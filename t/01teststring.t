@@ -2,7 +2,7 @@
 
 use strict;
 
-use Test::More tests => 11;
+use Test::More tests => 15;
 use Test::Builder::Tester;
 use Test::Builder::Tester::Color;
 
@@ -122,3 +122,44 @@ test_diag(qq(after whitespace removal:
 #     strings begin to differ at char 3));
 is_string_nows("a b c", "abd", "non-ws differs");
 test_test("is_string_nows tests correctly");
+
+test_out("not ok 1 - 123 is 124");
+test_fail(6);
+test_diag(qq!         got: "123"
+#       length: 3
+#     expected: "124"
+#       length: 3
+#     strings begin to differ at char 3 (line 1 column 3)!);
+is_string("123", "124", "123 is 124");
+test_test("two short number strings differ at char 3");
+
+test_out("not ok 1 - 123 is 124");
+test_fail(6);
+test_diag(qq!         got: "123"
+#       length: 3
+#     expected: "124"
+#       length: 3
+#     strings begin to differ at char 3 (line 1 column 3)!);
+is_string(0+"123", 0+"124", "123 is 124");
+test_test("two small numbers compared in string context differ at char 3");
+
+test_out("not ok 1 - 123 is 123xyz");
+test_fail(6);
+test_diag(qq!         got: "123"
+#       length: 3
+#     expected: "123xyz"
+#       length: 6
+#     strings begin to differ at char 4 (line 1 column 4)!);
+is_string("123", "123xyz", "123 is 123xyz");
+test_test("short number string differs from short string at char 4");
+
+test_out("not ok 1 - 123 is 123xyz");
+test_fail(6);
+test_diag(qq!         got: "123"
+#       length: 3
+#     expected: "123xyz"
+#       length: 6
+#     strings begin to differ at char 4 (line 1 column 4)!);
+is_string(0+"123", "123xyz", "123 is 123xyz");
+test_test("small number differs from short string at char 4");
+
