@@ -9,4 +9,14 @@ WriteMakefile(
 	'Test::Builder::Tester'	=> 1.04,
     },
     LICENSE	    => 'perl',
+    META_MERGE => {
+    'meta-spec' => { version => 2 },
+        resources => {
+            repository => {
+                type => 'git',
+                url  => 'https://github.com/rgs/Test-LongString.git',
+                web  => 'https://github.com/rgs/Test-LongString',
+            },
+        },
+    },
 );
