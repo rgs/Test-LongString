@@ -1,4 +1,4 @@
-Test::LongString v0.15
+Test::LongString v0.16
 ======================
 
 A library to test long strings.
@@ -22,4 +22,4 @@ COPYRIGHT AND LICENCE
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
-Copyright (c) 2002 - 2011 Rafael Garcia-Suarez
+Copyright (c) 2002 - 2014 Rafael Garcia-Suarez

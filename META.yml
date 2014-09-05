@@ -1,23 +1,19 @@
---- #YAML:1.0
-name:               Test-LongString
-version:            0.15
-abstract:           ~
+---
+abstract: unknown
 author:
-    - Rafael Garcia-Suarez <rgs@consttype.org>
-license:            perl
-distribution_type:  module
-configure_requires:
-    ExtUtils::MakeMaker:  0
-build_requires:
-    ExtUtils::MakeMaker:  0
-requires:
-    Test::Builder:        0.12
-    Test::Builder::Tester:  1.04
-no_index:
-    directory:
-        - t
-        - inc
-generated_by:       ExtUtils::MakeMaker version 6.55_02
+  - 'Rafael Garcia-Suarez <rgs@consttype.org>'
+build_requires: {}
+dynamic_config: 1
+generated_by: 'ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.140640'
+license: perl
 meta-spec:
-    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
-    version:  1.4
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: Test-LongString
+no_index:
+  directory:
+    - t
+    - inc
+resources:
+  repository: https://github.com/rgs/Test-LongString.git
+version: '0.16'
