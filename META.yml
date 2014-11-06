@@ -16,4 +16,4 @@ no_index:
     - inc
 resources:
   repository: https://github.com/rgs/Test-LongString.git
-version: '0.16'
+version: '0.17'
