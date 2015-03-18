@@ -118,20 +118,24 @@ DIAG
 sub _lcss($$) {
     my ($S, $T) = (@_);
     my @L;
-    my ($offset, $length, $flipper, $eq_flag) = (0,0);
+    my ($offset, $length, $swapped, $length_S, $length_T, $flipper, $eq_flag, $less_j) = (0,0,0);
 
     # prevent us from having to zero a $ix$j matrix
     no warnings 'uninitialized';
 
+    $length_S = length($S);
+    $length_T = length($T);
+    ($T, $S, $length_T, $length_S, $swapped, $less_j) = ($S, $T, $length_S, $length_T, 1, $length_T) if $length_T > $length_S;
     # now the actual LCSS algorithm
-    foreach my $i (1 .. length($S) ) { 
+    foreach my $i (1 .. $length_S ) { 
         $flipper = $i&1;
-        foreach my $j (1 .. length($T)) {
+        foreach my $j (1 .. $length_T) {
             $eq_flag = substr($S, $i-1, 1) eq substr($T, $j-1, 1) ? 1 : 0;
             $L[$flipper][$j] = $L[$flipper^1][$j-1] + $eq_flag;
-            if ($eq_flag && $L[$flipper][$j] > $length) {
+            if ($eq_flag && ($L[$flipper][$j] > $length || ($swapped && $L[$flipper][$j] >= $length && $less_j > $j))) {
                 $length = $L[$flipper][$j];
-                $offset = $i - $length;
+                $offset = ( $swapped ? $j : $i ) - $length;
+                $less_j = $j; 
             }   
         }   
     }   
