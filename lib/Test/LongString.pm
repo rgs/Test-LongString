@@ -36,7 +36,7 @@ sub import {
 
 # _display($string, [$offset = 0])
 # Formats a string for display. Begins at $offset minus $Context.
-# This function ought to be configurable, à la od(1).
+# This function ought to be configurable, Ã  la od(1).
 
 sub _display {
     my $s = shift;
@@ -118,28 +118,23 @@ DIAG
 sub _lcss($$) {
     my ($S, $T) = (@_);
     my @L;
-    my ($offset, $length) = (0,0);
+    my ($offset, $length, $flipper, $eq_flag) = (0,0);
 
     # prevent us from having to zero a $ix$j matrix
     no warnings 'uninitialized';
 
     # now the actual LCSS algorithm
-    foreach my $i (0 .. length($S) ) {
-        foreach my $j (0 .. length($T)) {
-            if (substr($S, $i, 1) eq substr($T, $j, 1)) {
-                if ($i == 0 or $j == 0) {
-                    $L[$i][$j] = 1;
-                }
-                else {
-                    $L[$i][$j] = $L[$i-1][$j-1] + 1;
-                }
-                if ($L[$i][$j] > $length) {
-                    $length = $L[$i][$j];
-                    $offset = $i - $length + 1;
-                }
-            }
-        }
-    }
+    foreach my $i (1 .. length($S) ) { 
+        $flipper = $i&1;
+        foreach my $j (1 .. length($T)) {
+            $eq_flag = substr($S, $i-1, 1) eq substr($T, $j-1, 1) ? 1 : 0;
+            $L[$flipper][$j] = $L[$flipper^1][$j-1] + $eq_flag;
+            if ($eq_flag && $L[$flipper][$j] > $length) {
+                $length = $L[$flipper][$j];
+                $offset = $i - $length;
+            }   
+        }   
+    }   
 
     # if you want to display just the lcss:
     # return substr($S, $offset, $length);
