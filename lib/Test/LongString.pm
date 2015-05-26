@@ -6,7 +6,6 @@ use vars qw($VERSION @ISA @EXPORT $Max $Context $EOL $LCSS);
 $VERSION = '0.17';
 
 use Test::Builder;
-my $Tester = new Test::Builder();
 
 use Exporter;
 @ISA    = ('Exporter');
@@ -70,6 +69,7 @@ sub _common_prefix_length {
 sub contains_string($$;$) {
     my ($str,$sub,$name) = @_;
 
+    my $Tester = new Test::Builder();
     my $ok;
     if (!defined $str) {
         $Tester->ok($ok = 0, $name);
@@ -151,6 +151,7 @@ sub _lcss($$) {
 sub lacks_string($$;$) {
     my ($str,$sub,$name) = @_;
 
+    my $Tester = new Test::Builder();
     my $ok;
     if (!defined $str) {
         $Tester->ok($ok = 0, $name);
@@ -179,6 +180,7 @@ DIAG
 
 sub is_string ($$;$) {
     my ($got, $expected, $name) = @_;
+    my $Tester = new Test::Builder();
     if (!defined $got || !defined $expected) {
 	my $ok = !defined $got && !defined $expected;
 	$Tester->ok($ok, $name);
@@ -218,6 +220,7 @@ DIAG
 
 sub is_string_nows ($$;$) {
     my ($got, $expected, $name) = @_;
+    my $Tester = new Test::Builder();
     if (!defined $got || !defined $expected) {
 	my $ok = !defined $got && !defined $expected;
 	$Tester->ok($ok, $name);
@@ -266,6 +269,7 @@ sub unlike_string ($$;$) {
 sub _like {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ($got, $regex, $cmp, $name) = @_;
+    my $Tester = new Test::Builder();
     my $ok = 0;
     my $usable_regex = $Tester->maybe_regex($regex);
     unless (defined $usable_regex) {
